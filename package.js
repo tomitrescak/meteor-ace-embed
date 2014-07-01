@@ -8,7 +8,7 @@ var path = Npm.require("path"),
 	packagePath = path.join(path.resolve("."), "packages", "ace-embed");
 
 Package.on_use(function (api, where) {
-	api.use(['jquery', "templating", "underscore", "deps"], ["client"]);
+	api.use(['jquery', 'j2js', "templating", "underscore", "deps"], ["client"]);
 
 	//ace folder
 	var files = fs.readdirSync(path.join(packagePath, "ace"));
@@ -26,5 +26,5 @@ Package.on_use(function (api, where) {
 		api.add_files(snippetPath, "client", {isAsset: true});
 	})
 	
-	api.add_files(["ace/ace.js", "ace/ext-modelist.js", "ace/theme-twilight.js", "ace/mode-css.js", "editorSetup.js", "ace.css"], "client");
+	api.add_files(["ace/ace.js", "ace/ext-modelist.js", "ace/theme-twilight.js", "editorSetup.js", "ace.css"], "client");
 });

@@ -4,6 +4,6 @@
   "homepage":"https://github.com/stuartfenton/meteor-ace-embed",
   "author": "Stuart Fenton <stuart@overlima.com>",
   "version":"0.0.4",
-  "git": "https://github.com/stuartfenton/meteor-ace-embed.git",
+  "git": "https://github.com/tomitrescak/meteor-ace-embed.git",
   "packages":{}
 }

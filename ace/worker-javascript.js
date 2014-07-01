@@ -6,7 +6,7 @@ if (typeof window.window != "undefined" && window.document) {
 
 window.console = function() {
     var msgs = Array.prototype.slice.call(arguments, 0);
-    postMessage({type: "log", data: msgs});
+    // postMessage({type: "log", data: msgs});
 };
 window.console.error =
 window.console.warn = 
@@ -1089,14 +1089,24 @@ oop.inherits(JavaScriptWorker, Mirror);
 
     this.onUpdate = function() {
         var value = this.doc.getValue();
+        //j2js
+        // replace function return values with "function"
+        value = value.replace(/(String|boolean|int|double|float|void)( +\w+ *\()/g, "function$2");
+        // replace variables with "var"
+        value = value.replace(/(String|boolean|int|double|float|void)( +\w+)( *;| *=)/g, "var$2$3");
+        // the rest of variables are the ones in function headers
+        value = value.replace(/(String|boolean|int|double|float|void) */g, "");
         value = value.replace(/^#!.*\n/, "\n");
+
+        //alert(value);
+        console.log(value);
         if (!value) {
             this.sender.emit("jslint", []);
             return;
         }
         var errors = [];
         var maxErrorLevel = this.isValidJS(value) ? "warning" : "error";
-        lint(value, this.options);
+        lint(value, this.options,  ['move']);
         var results = lint.errors;
 
         var errorAdded = false
@@ -3914,7 +3924,7 @@ var JSHINT = (function () {
 		funct, // The current function
 		functions, // All of the functions
 
-		global, // The global scope
+		global = ['move'], // The global scope
 		implied, // Implied globals
 		inblock,
 		indent,
