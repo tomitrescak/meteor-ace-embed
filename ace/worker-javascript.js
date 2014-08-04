@@ -1090,6 +1090,8 @@ oop.inherits(JavaScriptWorker, Mirror);
     this.onUpdate = function() {
         var value = this.doc.getValue();
         //j2js
+        // replace accessors
+        value = value.replace(/(public |private |protected )/g, "");
         // replace function return values with "function"
         value = value.replace(/(String|boolean|int|double|float|void)( +\w+ *\()/g, "function$2");
         // replace variables with "var"
